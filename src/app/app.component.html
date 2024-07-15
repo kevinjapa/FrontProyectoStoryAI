@@ -1,5 +1,28 @@
-<h1>Reconocimiento de Voz a Texto</h1>
-<button id="record" (click)="startRecording()">Iniciar Grabación</button>
-<div id="transcript">{{ transcript }}</div>
-
-<router-outlet></router-outlet>
+<body>
+    <div class="principal">
+        <h1>StoryAI</h1>
+        <div class="secundario">
+            <button class="Personaje"> Personaje </button>
+            <div class="chat">
+               <div class="consulta">
+                <h3>Consulta</h3>
+                <!-- <div id="transcript">{{ transcript }}</div> -->
+                <div id="transcript">
+                    {{ isLoading ? 'Cargando...' : transcript }}
+                  </div>
+                  
+               </div>
+               <div class="respuesta">
+                <h3>Respuesta</h3>
+               </div> 
+            </div>
+            <!-- <button id="record" (click)="startRecording()">Hablar</button> -->
+            <button id="record" 
+            [ngClass]="{ 'recording': isRecording }" 
+            (click)="handleRecording()">
+            {{ isRecording ? 'Grabando...' : 'Hablar' }}
+    </button>
+        </div>    
+    </div>
+    <router-outlet></router-outlet>
+</body>
