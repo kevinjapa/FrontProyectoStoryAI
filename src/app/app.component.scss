@@ -31,6 +31,17 @@ body {
     max-width: 80%; 
     word-wrap: break-word; 
 }
+.question{
+        display: inline-block;
+        margin-top: 20px;
+        font-size: 18px;
+        background-color: #f1f1f1;
+        padding: 10px;
+        border-radius: 15px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        max-width: 80%; 
+        word-wrap: break-word; 
+}
 @keyframes blink {
     0% { opacity: 1; }
     50% { opacity: 0; }
@@ -84,3 +95,14 @@ h3 {
 .consulta {
     text-align: right;
 }
+.chat-entry {
+    margin-bottom: 20px;
+  }
+  
+  .current {
+    margin-top: 20px;
+  }
+  
+  .consulta, .respuesta {
+    margin-bottom: 10px;
+  }

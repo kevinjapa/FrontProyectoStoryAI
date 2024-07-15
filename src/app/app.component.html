@@ -1,4 +1,4 @@
-<body>
+<!-- <body>
     <div class="principal">
         <h1>StoryAI</h1>
         <div class="secundario">
@@ -6,7 +6,6 @@
             <div class="chat">
                <div class="consulta">
                 <h3>Consulta</h3>
-                <!-- <div id="transcript">{{ transcript }}</div> -->
                 <div id="transcript">
                     {{ isLoading ? 'Cargando...' : transcript }}
                   </div>
@@ -16,7 +15,6 @@
                 <h3>Respuesta</h3>
                </div> 
             </div>
-            <!-- <button id="record" (click)="startRecording()">Hablar</button> -->
             <button id="record" 
                 [ngClass]="{ 'recording': isRecording }" 
                 [disabled]="isRecording"
@@ -26,4 +24,45 @@
         </div>    
     </div>
     <router-outlet></router-outlet>
-</body>
+</body> -->
+
+<body>
+    <div class="principal">
+      <h1>StoryAI</h1>
+      <div class="secundario">
+        <button class="Personaje">Personaje</button>
+        <div class="chat">
+          <div *ngFor="let entry of chatHistory" class="chat-entry">
+            <div class="consulta">
+              <h3>Consulta</h3>
+              <div class="question">{{ entry.question }}</div>
+            </div>
+            <div class="respuesta">
+              <h3>Respuesta</h3>
+              <div class="answer">{{ entry.answer }}</div>
+            </div>
+          </div>
+          <div class="current" *ngIf="isLoading">
+            <div class="consulta">
+              <h3>Consulta</h3>
+              <div id="transcript">
+                Cargando...
+              </div>
+            </div>
+            <div class="respuesta">
+              <h3>Respuesta</h3>
+              <div class="answer"></div>
+            </div>
+          </div>
+        </div>
+        <button id="record" 
+                [ngClass]="{ 'recording': isRecording }" 
+                [disabled]="isRecording"
+                (click)="handleRecording()">
+          {{ isRecording ? 'Grabando...' : 'Hablar' }}
+        </button>
+      </div>    
+    </div>
+    <router-outlet></router-outlet>
+  </body>
+  
