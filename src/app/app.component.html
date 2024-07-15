@@ -18,10 +18,11 @@
             </div>
             <!-- <button id="record" (click)="startRecording()">Hablar</button> -->
             <button id="record" 
-            [ngClass]="{ 'recording': isRecording }" 
-            (click)="handleRecording()">
-            {{ isRecording ? 'Grabando...' : 'Hablar' }}
-    </button>
+                [ngClass]="{ 'recording': isRecording }" 
+                [disabled]="isRecording"
+                (click)="handleRecording()">
+                {{ isRecording ? 'Grabando...' : 'Hablar' }}
+            </button>
         </div>    
     </div>
     <router-outlet></router-outlet>

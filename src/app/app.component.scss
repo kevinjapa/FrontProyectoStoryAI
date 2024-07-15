@@ -11,6 +11,14 @@ body {
     font-size: 16px;
     align-self: flex-end;
 }
+#record.recording {
+    background-color: rgb(229, 175, 175);
+  }
+  
+  #record:disabled {
+    cursor: not-allowed;
+    background-color: #aaa;
+  }
 
 #transcript {
     display: inline-block;
@@ -23,6 +31,16 @@ body {
     max-width: 80%; 
     word-wrap: break-word; 
 }
+@keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  
+  #transcript.loading::after {
+    content: '...';
+    animation: blink 1.5s infinite;
+  }
 
 h1 {
     text-align: center;
