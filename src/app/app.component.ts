@@ -7,6 +7,22 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  // Para el Boton
+
+  dropdownOpen = false;
+  colors = ['Barney', 'Homero Simpson', 'Pepa Pig', 'Riley' ];
+  selectedColor: string | null = null;
+
+  toggleDropdown() {
+    this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  selectColor(color: string) {
+    this.selectedColor = color;
+    console.log(`The selected color is ${color}`);
+    this.dropdownOpen = false; // Close dropdown after selection
+  }
+
   title = 'FrontProyectoStoryAI';
   transcript: string = '';
   isRecording = false;

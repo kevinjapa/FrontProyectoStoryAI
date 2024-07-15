@@ -30,7 +30,16 @@
     <div class="principal">
       <h1>StoryAI</h1>
       <div class="secundario">
-        <button class="Personaje">Personaje</button>
+        
+        <div class="button-Personaje">
+            <button class="Personaje" (click)="toggleDropdown()">{{ selectedColor ? selectedColor : 'Personajes' }}</button>
+            <div [class.show]="dropdownOpen" class="Personaje-content">
+                <label *ngFor="let color of colors">
+                    <input type="radio" name="color" [value]="color" (click)="selectColor(color)"> {{ color }}
+                </label>
+            </div>
+        </div>
+        
         <div class="chat">
           <div *ngFor="let entry of chatHistory" class="chat-entry">
             <div class="consulta">
