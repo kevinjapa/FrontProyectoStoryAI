@@ -1,32 +1,3 @@
-<!-- <body>
-    <div class="principal">
-        <h1>StoryAI</h1>
-        <div class="secundario">
-            <button class="Personaje"> Personaje </button>
-            <div class="chat">
-               <div class="consulta">
-                <h3>Consulta</h3>
-                <div id="transcript">
-                    {{ isLoading ? 'Cargando...' : transcript }}
-                  </div>
-                  
-               </div>
-               <div class="respuesta">
-                <h3>Respuesta</h3>
-               </div> 
-            </div>
-            <button id="record" 
-                [ngClass]="{ 'recording': isRecording }" 
-                [disabled]="isRecording"
-                (click)="handleRecording()">
-                {{ isRecording ? 'Grabando...' : 'Hablar' }}
-            </button>
-        </div>    
-    </div>
-    <router-outlet></router-outlet>
-</body> -->
-
-
 <body>
     <div class="principal">
       <h1>StoryAI</h1>
@@ -48,11 +19,7 @@
             </div>
             <div class="respuesta">
               <h3>Respuesta</h3>
-              <!-- <div class="answer">{{ entry.answer }}</div> -->
-              <div class="answer" *ngIf="responseMessage">
-                <p>Respuesta de la API:</p>
-                <pre>{{ responseMessage | json }}</pre>
-              </div>
+              <div class="answer">{{ entry.answer }}</div>
             </div>
           </div>
           <div class="current" *ngIf="isLoading">
@@ -78,24 +45,7 @@
     </div>
   </body>
 
-  <div>
+  <!-- <div>
     <textarea name="messageToSend" [(ngModel)]="messageToSend" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
-    <br>
-    <!-- <button (click)="sendMessage()">Enviar Mensaje</button> -->
   </div>
-  
-
-  <!-- Aquí puedes mostrar la respuesta o mensajes de error -->
-<div *ngIf="responseMessage">
-  <!-- <p>Respuesta de la API:</p> -->
-  <pre>{{ responseMessage | json }}</pre>
-</div>
-<!-- <div *ngIf="errorMessage">
-  <p>Error:</p>
-  <p>{{ errorMessage }}</p>
-</div>
-
-<div *ngIf="isLoading">
-  <p>Cargando...</p>
-</div>
    -->

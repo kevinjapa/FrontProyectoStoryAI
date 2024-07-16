@@ -141,7 +141,6 @@
 
 // }
 
-
 import { Component } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
@@ -158,6 +157,14 @@ export class AppComponent {
   errorMessage: string = '';
   apiUrl = 'http://127.0.0.1:5000/api/chat-gpt';
 
+  title = 'FrontProyectoStoryAI';
+  transcript: string = '';
+  isRecording = false;
+  isLoading = false;
+  mediaRecorder: MediaRecorder | null = null;
+  audioStream: MediaStream | null = null;
+  chatHistory: { question: string, answer: string }[] = [];
+
   textAudio: string = ''; // Variable con el texto del AUDIO
 
   // Para el Boton de los personajes
@@ -172,16 +179,8 @@ export class AppComponent {
   selectColor(color: string) {
     this.selectedColor = color;
     console.log(`The selected color is ${color}`);
-    this.dropdownOpen = false; // Close dropdown after selection
+    this.dropdownOpen = false;
   }
-
-  title = 'FrontProyectoStoryAI';
-  transcript: string = '';
-  isRecording = false;
-  isLoading = false;
-  mediaRecorder: MediaRecorder | null = null;
-  audioStream: MediaStream | null = null;
-  chatHistory: { question: string, answer: string }[] = []; // Lista para almacenar el historial de chat
 
   handleRecording() {
     if (!this.isRecording) {
@@ -196,7 +195,6 @@ export class AppComponent {
       }, 7000); 
     }
   }
-
   // Para grabar el audio y generar texto 
   startRecording() {
     navigator.mediaDevices.getUserMedia({ audio: true })
@@ -249,7 +247,6 @@ export class AppComponent {
         this.isRecording = false; 
       });
   }
-
   // Para el modelo generativo de Cuento 
   constructor(private http: HttpClient) {}
   sendMessage(txtAudio: string) {

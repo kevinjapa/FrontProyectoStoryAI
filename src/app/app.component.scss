@@ -1,5 +1,238 @@
+// body {
+//     font-family: Arial, sans-serif;
+// }
+
+// #record {
+//     background-color: #4CAF50;
+//     color: white;
+//     padding: 15px;
+//     border: none;
+//     cursor: pointer;
+//     font-size: 16px;
+//     align-self: flex-end;
+// }
+// #record.recording {
+//     background-color: rgb(229, 175, 175);
+//   }
+  
+//   #record:disabled {
+//     cursor: not-allowed;
+//     background-color: #aaa;
+//   }
+
+// #transcript {
+//     display: inline-block;
+//     margin-top: 20px;
+//     font-size: 18px;
+//     background-color: #f1f1f1;
+//     padding: 10px;
+//     border-radius: 15px;
+//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+//     max-width: 80%; 
+//     word-wrap: break-word; 
+// }
+// .question{
+//         display: inline-block;
+//         margin-top: 20px;
+//         font-size: 18px;
+//         background-color: #f1f1f1;
+//         padding: 10px;
+//         border-radius: 15px;
+//         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+//         max-width: 80%; 
+//         word-wrap: break-word; 
+// }
+// @keyframes blink {
+//     0% { opacity: 1; }
+//     50% { opacity: 0; }
+//     100% { opacity: 1; }
+//   }
+  
+//   #transcript.loading::after {
+//     content: '...';
+//     animation: blink 1.5s infinite;
+//   }
+
+// h1 {
+//     text-align: center;
+// }
+
+// h3 {
+//     color: #797979;
+// }
+
+// .secundario {
+//     border: 2px solid #9494943d; 
+//     height: 95vh; 
+//     width: 95%; 
+//     margin: 0 auto; 
+//     padding: 20px; 
+//     box-sizing: border-box; 
+//     border-radius: 15px; 
+//     display: flex;
+//     flex-direction: column;
+// }
+// .Personaje {
+//     background-color: #99a9e7;
+//     color: white;
+//     padding: 10px;
+//     border: none;
+//     cursor: pointer;
+//     font-size: 16px;
+//     text-align: left;
+//     margin-bottom: 20px;
+//     align-self: flex-start;
+// }
+
+// .chat {
+//     border: 1px solid #ccc; 
+//     padding: 10px; 
+//     margin-bottom: 10px; 
+//     border-radius: 10px; 
+//     height: 90vh;
+// }
+
+// .consulta {
+//     text-align: right;
+// }
+// .chat-entry {
+//     margin-bottom: 20px;
+//   }
+  
+//   .current {
+//     margin-top: 20px;
+//   }
+  
+//   .consulta, .respuesta {
+//     margin-bottom: 10px;
+//   }
+
+
+// //   para el boton
+
+// .dropdown {
+//     position: relative;
+//     display: inline-block;
+// }
+
+// .Personaje-content {
+//     display: none;
+//     position: absolute;
+//     background-color: #f9f9f9;
+//     min-width: 160px;
+//     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+//     z-index: 1;
+// }
+
+// .Personaje-content label {
+//     display: block;
+//     padding: 8px 16px;
+//     cursor: pointer;
+// }
+
+// .Personaje-content label:hover {
+//     background-color: #f1f1f1;
+// }
+
+// .Personaje.show .Personaje-content {
+//     display: block;
+    
+// }
+
+// .show {
+//     display: block;
+// }
+
 body {
     font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+.principal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
+.secundario {
+    border: 2px solid #9494943d;
+    height: 90%;
+    width: 95%;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+.button-Personaje {
+    margin-bottom: 10px;
+}
+
+.chat {
+    flex: 1;
+    overflow-y: auto;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+.chat-entry {
+    margin-bottom: 20px;
+}
+
+.consulta {
+    text-align: right;
+}
+
+.respuesta {
+    text-align: left;
+}
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 10px;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.5em;
+    margin-bottom: 0.5em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    padding: 0.5em 1em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.loading-indicator {
+    color: #007bff;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 1em;
 }
 
 #record {
@@ -11,14 +244,15 @@ body {
     font-size: 16px;
     align-self: flex-end;
 }
+
 #record.recording {
     background-color: rgb(229, 175, 175);
-  }
-  
-  #record:disabled {
+}
+
+#record:disabled {
     cursor: not-allowed;
     background-color: #aaa;
-  }
+}
 
 #transcript {
     display: inline-block;
@@ -27,31 +261,21 @@ body {
     background-color: #f1f1f1;
     padding: 10px;
     border-radius: 15px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-    max-width: 80%; 
-    word-wrap: break-word; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 80%;
+    word-wrap: break-word;
 }
-.question{
-        display: inline-block;
-        margin-top: 20px;
-        font-size: 18px;
-        background-color: #f1f1f1;
-        padding: 10px;
-        border-radius: 15px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-        max-width: 80%; 
-        word-wrap: break-word; 
-}
+
 @keyframes blink {
     0% { opacity: 1; }
     50% { opacity: 0; }
     100% { opacity: 1; }
-  }
-  
-  #transcript.loading::after {
+}
+
+#transcript.loading::after {
     content: '...';
     animation: blink 1.5s infinite;
-  }
+}
 
 h1 {
     text-align: center;
@@ -61,55 +285,8 @@ h3 {
     color: #797979;
 }
 
-.secundario {
-    border: 2px solid #9494943d; 
-    height: 95vh; 
-    width: 95%; 
-    margin: 0 auto; 
-    padding: 20px; 
-    box-sizing: border-box; 
-    border-radius: 15px; 
-    display: flex;
-    flex-direction: column;
-}
-.Personaje {
-    background-color: #99a9e7;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    font-size: 16px;
-    text-align: left;
-    margin-bottom: 20px;
-    align-self: flex-start;
-}
 
-.chat {
-    border: 1px solid #ccc; 
-    padding: 10px; 
-    margin-bottom: 10px; 
-    border-radius: 10px; 
-    height: 90vh;
-}
-
-.consulta {
-    text-align: right;
-}
-.chat-entry {
-    margin-bottom: 20px;
-  }
-  
-  .current {
-    margin-top: 20px;
-  }
-  
-  .consulta, .respuesta {
-    margin-bottom: 10px;
-  }
-
-
-//   para el boton
-
+// bton personajes 
 .dropdown {
     position: relative;
     display: inline-block;
