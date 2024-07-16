@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -7,7 +9,10 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  // Para el Boton
+  textAudio: string = ''; // Variable con el texto del AUDIO
+
+
+  // Para el Boton de los personajes 
 
   dropdownOpen = false;
   colors = ['Barney', 'Homero Simpson', 'Pepa Pig', 'Riley' ];
@@ -41,9 +46,11 @@ export class AppComponent {
         if (this.mediaRecorder) {
           this.mediaRecorder.stop();
         }
-      }, 5000); // Cambia el estado después de 5 segundos
+      }, 7000); 
     }
   }
+
+  // para grabar el audio y generar texto 
 
   startRecording() {
     navigator.mediaDevices.getUserMedia({ audio: true })
@@ -62,7 +69,7 @@ export class AppComponent {
           const formData = new FormData();
           formData.append('audio', audioBlob);
 
-          this.isLoading = true; // Inicia el estado de carga
+          this.isLoading = true; 
           fetch('http://127.0.0.1:5000/api/transcribe', {
             method: 'POST',
             body: formData
@@ -73,12 +80,14 @@ export class AppComponent {
             return response.json();
           }).then(data => {
             this.transcript = data.transcript;
-            this.chatHistory.push({ question: this.transcript, answer: '' }); // Almacenar solo la consulta
-            this.transcript = ''; // Limpiar la transcripción después de añadir al historial
-            this.isLoading = false; // Termina el estado de carga
+            this.textAudio=this.transcript;
+            this.chatHistory.push({ question: this.transcript, answer: '' }); 
+            this.transcript = ''; 
+            this.isLoading = false; 
+            this.sendMessage();
           }).catch(error => {
             console.error('There was a problem with the fetch operation:', error);
-            this.isLoading = false; // Termina el estado de carga en caso de error
+            this.isLoading = false; 
           }).finally(() => {
             if (this.audioStream) {
               this.audioStream.getTracks().forEach(track => track.stop());
@@ -88,10 +97,80 @@ export class AppComponent {
 
         setTimeout(() => {
           this.mediaRecorder?.stop();
-        }, 5000); // Graba por 5 segundos
+        }, 7000);
       }).catch(error => {
         console.error('There was a problem with getUserMedia:', error);
-        this.isRecording = false; // Asegura que isRecording se restablezca en caso de error
+        this.isRecording = false; 
       });
   }
+
+
+  // modelo para el texto:
+  // messageToSend: string = '';
+  // responseMessage: any;
+  // errorMessage: string = '';
+  // apiUrl = 'http://127.0.0.1:5000/api/chat-gpt';
+
+  // constructor(private http: HttpClient) {}
+
+  // sendMessage() {
+  //   this.isLoading = true;
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json'
+  //   });
+  //   const payload = {
+  //     message: this.messageToSend
+  //   };
+
+  //   this.http.post<any>(this.apiUrl, payload, { headers: headers })
+  //     .subscribe(
+  //       (response: any) => {
+  //         console.log('API Response:', response);
+  //         this.responseMessage = response;
+  //         this.chatHistory.push({ question: this.responseMessage, answer: '' });
+  //         // Aquí puedes manejar la respuesta como desees
+  //         this.isLoading = false; // Finaliza el estado de carga
+  //       },
+  //       (error: any) => {
+  //         console.error('API Error:', error);
+  //         this.errorMessage = 'Error al enviar el mensaje.';
+  //         this.isLoading = false; // Finaliza el estado de carga en caso de error
+  //       }
+  //     );
+  // }
+
+  // Para el modelo generativo de Cuento 
+
+  messageToSend: string = this.textAudio;
+  responseMessage: string = '';
+  errorMessage: string = '';
+  apiUrl = 'http://127.0.0.1:5000/api/chat-gpt';
+
+  constructor(private http: HttpClient) {}
+
+  sendMessage() {
+    this.isLoading = true;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    const payload = {
+      message: this.messageToSend
+    };
+
+    this.http.post<any>(this.apiUrl, payload, { headers: headers })
+      .subscribe(
+        (response: any) => {
+          console.log('API Response:', response);
+          this.responseMessage = response.response; // Accede al contenido real de la respuesta
+          this.chatHistory.push({ question: this.messageToSend, answer: this.responseMessage });
+          this.isLoading = false;
+        },
+        (error: any) => {
+          console.error('API Error:', error);
+          this.errorMessage = 'Error al enviar el mensaje.';
+          this.isLoading = false;
+        }
+      );
+  }
+
 }

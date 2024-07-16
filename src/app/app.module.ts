@@ -6,6 +6,8 @@ import { AppComponent } from './app.component';
 import { InicioComponent } from './pages/inicio/inicio.component';
 import { MenuComponent } from './pages/menu/menu.component';
 import { ChoiceButtonComponent } from './choice-button/choice-button.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { ChoiceButtonComponent } from './choice-button/choice-button.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

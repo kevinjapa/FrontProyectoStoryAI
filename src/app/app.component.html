@@ -26,6 +26,7 @@
     <router-outlet></router-outlet>
 </body> -->
 
+
 <body>
     <div class="principal">
       <h1>StoryAI</h1>
@@ -39,7 +40,6 @@
                 </label>
             </div>
         </div>
-        
         <div class="chat">
           <div *ngFor="let entry of chatHistory" class="chat-entry">
             <div class="consulta">
@@ -48,7 +48,11 @@
             </div>
             <div class="respuesta">
               <h3>Respuesta</h3>
-              <div class="answer">{{ entry.answer }}</div>
+              <!-- <div class="answer">{{ entry.answer }}</div> -->
+              <div class="answer" *ngIf="responseMessage">
+                <p>Respuesta de la API:</p>
+                <pre>{{ responseMessage | json }}</pre>
+              </div>
             </div>
           </div>
           <div class="current" *ngIf="isLoading">
@@ -72,6 +76,26 @@
         </button>
       </div>    
     </div>
-    <router-outlet></router-outlet>
   </body>
+
+  <div>
+    <textarea name="messageToSend" [(ngModel)]="messageToSend" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
+    <br>
+    <button (click)="sendMessage()">Enviar Mensaje</button>
+  </div>
   
+
+  <!-- Aquí puedes mostrar la respuesta o mensajes de error -->
+<div *ngIf="responseMessage">
+  <!-- <p>Respuesta de la API:</p> -->
+  <pre>{{ responseMessage | json }}</pre>
+</div>
+<!-- <div *ngIf="errorMessage">
+  <p>Error:</p>
+  <p>{{ errorMessage }}</p>
+</div>
+
+<div *ngIf="isLoading">
+  <p>Cargando...</p>
+</div>
+   -->
