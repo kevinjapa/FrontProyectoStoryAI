@@ -1,154 +1,11 @@
-// body {
-//     font-family: Arial, sans-serif;
-// }
-
-// #record {
-//     background-color: #4CAF50;
-//     color: white;
-//     padding: 15px;
-//     border: none;
-//     cursor: pointer;
-//     font-size: 16px;
-//     align-self: flex-end;
-// }
-// #record.recording {
-//     background-color: rgb(229, 175, 175);
-//   }
-  
-//   #record:disabled {
-//     cursor: not-allowed;
-//     background-color: #aaa;
-//   }
-
-// #transcript {
-//     display: inline-block;
-//     margin-top: 20px;
-//     font-size: 18px;
-//     background-color: #f1f1f1;
-//     padding: 10px;
-//     border-radius: 15px;
-//     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-//     max-width: 80%; 
-//     word-wrap: break-word; 
-// }
-// .question{
-//         display: inline-block;
-//         margin-top: 20px;
-//         font-size: 18px;
-//         background-color: #f1f1f1;
-//         padding: 10px;
-//         border-radius: 15px;
-//         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-//         max-width: 80%; 
-//         word-wrap: break-word; 
-// }
-// @keyframes blink {
-//     0% { opacity: 1; }
-//     50% { opacity: 0; }
-//     100% { opacity: 1; }
-//   }
-  
-//   #transcript.loading::after {
-//     content: '...';
-//     animation: blink 1.5s infinite;
-//   }
-
-// h1 {
-//     text-align: center;
-// }
-
-// h3 {
-//     color: #797979;
-// }
-
-// .secundario {
-//     border: 2px solid #9494943d; 
-//     height: 95vh; 
-//     width: 95%; 
-//     margin: 0 auto; 
-//     padding: 20px; 
-//     box-sizing: border-box; 
-//     border-radius: 15px; 
-//     display: flex;
-//     flex-direction: column;
-// }
-// .Personaje {
-//     background-color: #99a9e7;
-//     color: white;
-//     padding: 10px;
-//     border: none;
-//     cursor: pointer;
-//     font-size: 16px;
-//     text-align: left;
-//     margin-bottom: 20px;
-//     align-self: flex-start;
-// }
-
-// .chat {
-//     border: 1px solid #ccc; 
-//     padding: 10px; 
-//     margin-bottom: 10px; 
-//     border-radius: 10px; 
-//     height: 90vh;
-// }
-
-// .consulta {
-//     text-align: right;
-// }
-// .chat-entry {
-//     margin-bottom: 20px;
-//   }
-  
-//   .current {
-//     margin-top: 20px;
-//   }
-  
-//   .consulta, .respuesta {
-//     margin-bottom: 10px;
-//   }
-
-
-// //   para el boton
-
-// .dropdown {
-//     position: relative;
-//     display: inline-block;
-// }
-
-// .Personaje-content {
-//     display: none;
-//     position: absolute;
-//     background-color: #f9f9f9;
-//     min-width: 160px;
-//     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-//     z-index: 1;
-// }
-
-// .Personaje-content label {
-//     display: block;
-//     padding: 8px 16px;
-//     cursor: pointer;
-// }
-
-// .Personaje-content label:hover {
-//     background-color: #f1f1f1;
-// }
-
-// .Personaje.show .Personaje-content {
-//     display: block;
-    
-// }
-
-// .show {
-//     display: block;
-// }
-
 body {
     font-family: Arial, sans-serif;
     display: flex;
     flex-direction: column;
     height: 100vh;
     margin: 0;
+    background-color: #f0f4f8;
+    color: #333;
 }
 
 .principal {
@@ -157,10 +14,11 @@ body {
     align-items: center;
     width: 100%;
     height: 100%;
+    background-color: #f0f4f8;
 }
 
 .secundario {
-    border: 2px solid #9494943d;
+    border: 2px solid #d1e3f0;
     height: 90%;
     width: 95%;
     margin: 0 auto;
@@ -169,6 +27,7 @@ body {
     border-radius: 15px;
     display: flex;
     flex-direction: column;
+    background-color: #ffffff;
 }
 
 .button-Personaje {
@@ -178,10 +37,11 @@ body {
 .chat {
     flex: 1;
     overflow-y: auto;
-    border: 1px solid #ccc;
+    border: 1px solid #d1e3f0;
     padding: 10px;
     margin-bottom: 10px;
     border-radius: 10px;
+    background-color: #e9f2f9;
 }
 
 .chat-entry {
@@ -190,10 +50,12 @@ body {
 
 .consulta {
     text-align: right;
+    color: #333;
 }
 
 .respuesta {
     text-align: left;
+    color: #333;
 }
 
 .input-container {
@@ -207,7 +69,7 @@ input, textarea {
     width: 100%;
     padding: 0.5em;
     margin-bottom: 0.5em;
-    border: 1px solid #ccc;
+    border: 1px solid #d1e3f0;
     border-radius: 4px;
 }
 
@@ -236,7 +98,7 @@ button:hover {
 }
 
 #record {
-    background-color: #4CAF50;
+    background-color: #28a745;
     color: white;
     padding: 15px;
     border: none;
@@ -246,7 +108,7 @@ button:hover {
 }
 
 #record.recording {
-    background-color: rgb(229, 175, 175);
+    background-color: #e3a5a5;
 }
 
 #record:disabled {
@@ -279,11 +141,46 @@ button:hover {
 
 h1 {
     text-align: center;
+    color: #007bff;
 }
 
 h3 {
-    color: #797979;
+    color: #007bff;
 }
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.Personaje-content {
+    display: none;
+    position: absolute;
+    background-color: #ffffff;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.Personaje-content label {
+    display: block;
+    padding: 8px 16px;
+    cursor: pointer;
+    color: #333;
+}
+
+.Personaje-content label:hover {
+    background-color: #f1f1f1;
+}
+
+.Personaje.show .Personaje-content {
+    display: block;
+}
+
+.show {
+    display: block;
+}
+
 
 
 // bton personajes 
