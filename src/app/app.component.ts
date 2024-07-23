@@ -439,6 +439,7 @@ export class AppComponent {
           this.messageToSend = ''; 
           this.isLoading = false;
           this.generateImage(this.responseMessage);
+          this.saveChatHistory();
         },
         (error: any) => {
           console.error('API Error:', error);
@@ -469,6 +470,7 @@ export class AppComponent {
           this.generatedImageUrl = response.image_url;
           if (this.generatedImageUrl) {
             this.addImageToChatHistory(this.generatedImageUrl);
+            this.saveChatHistory();
           } else {
             console.error('Image URL is null');
           }
@@ -486,4 +488,27 @@ export class AppComponent {
       lastChatEntry.imageUrl = imageUrl;
     }
   }
+
+  // paraguardar en la base de datos el historial
+
+  // Agrega esta función en AppComponent
+saveChatHistory() {
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json'
+  });
+  const payload = {
+    chatHistory: this.chatHistory
+  };
+
+  this.http.post<any>('http://127.0.0.1:5000/api/save-chat-history', payload, { headers: headers })
+    .subscribe(
+      (response: any) => {
+        console.log('Chat history saved:', response);
+      },
+      (error: any) => {
+        console.error('Error saving chat history:', error);
+      }
+    );
+}
+
 }
