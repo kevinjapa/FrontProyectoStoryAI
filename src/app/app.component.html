@@ -1,4 +1,4 @@
-<body>
+<!-- <body>
     <div class="principal">
       <h1>StoryAI</h1>
       <div class="secundario">
@@ -43,9 +43,52 @@
         </button>
       </div>    
     </div>
-  </body>
+  </body> -->
 
-  <!-- <div>
-    <textarea name="messageToSend" [(ngModel)]="messageToSend" rows="4" placeholder="Escribe tu mensaje aquí..."></textarea>
-  </div>
-   -->
+  <body>
+    <div class="principal">
+      <h1>StoryAI</h1>
+      <div class="secundario">
+        <div class="button-Personaje">
+          <button class="Personaje" (click)="toggleDropdown()">{{ selectedColor ? selectedColor : 'Personajes' }}</button>
+          <div [class.show]="dropdownOpen" class="Personaje-content">
+            <label *ngFor="let color of colors">
+              <input type="radio" name="color" [value]="color" (click)="selectColor(color)"> {{ color }}
+            </label>
+          </div>
+        </div>
+        <div class="chat">
+          <div *ngFor="let entry of chatHistory" class="chat-entry">
+            <div class="consulta">
+              <h3>Consulta</h3>
+              <div class="question">{{ entry.question }}</div>
+            </div>
+            <div class="respuesta">
+              <h3>Respuesta</h3>
+              <div class="answer">{{ entry.answer }}</div>
+            </div>
+          </div>
+          <div class="current" *ngIf="isLoading">
+            <div class="consulta">
+              <h3>Consulta</h3>
+              <div id="transcript">Cargando...</div>
+            </div>
+            <div class="respuesta">
+              <h3>Respuesta</h3>
+              <div class="answer"></div>
+            </div>
+           
+          </div>
+        </div>
+        <button id="record" [ngClass]="{ 'recording': isRecording }" [disabled]="isRecording" (click)="handleRecording()">
+          {{ isRecording ? 'Grabando...' : 'Hablar' }}
+        </button>
+      </div>
+      <div class="image-generator">
+        <div *ngIf="generatedImageUrl">
+          <img [src]="generatedImageUrl" alt="Imagen generada">
+        </div>
+      </div>
+    </div>
+  </body>
+  
