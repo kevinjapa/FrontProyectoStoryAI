@@ -8,12 +8,14 @@ import { AuthService } from './service/auth.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  // DireccionIP: string = "http://127.0.0.1:5001";
+  DireccionIP: string = " https://b64e-200-24-158-126.ngrok-free.app";
   messageToSend: string = '';
   responseMessage: string = '';
   errorMessage: string = '';
-  apiUrl = 'http://127.0.0.1:5000/api/chat-gpt';
-  imageApiUrl = 'http://127.0.0.1:5000/generate-image';
-  getChatHistoryApiUrl = 'http://127.0.0.1:5000/api/get-chat-history';
+  apiUrl = this.DireccionIP+'/api/chat-gpt';
+  imageApiUrl = this.DireccionIP+'/generate-image';
+  getChatHistoryApiUrl = this.DireccionIP+'/api/get-chat-history';
 
   title = 'FrontProyectoStoryAI';
   transcript: string = '';
@@ -93,7 +95,7 @@ export class AppComponent implements OnInit {
           formData.append('audio', audioBlob);
 
           this.isLoading = true; 
-          fetch('http://127.0.0.1:5000/api/transcribe', {
+          fetch(this.DireccionIP+'/api/transcribe', {
             method: 'POST',
             body: formData
           }).then(response => {
@@ -256,7 +258,7 @@ export class AppComponent implements OnInit {
       chatHistory: this.chatHistory
     };
 
-    this.http.post<any>('http://127.0.0.1:5000/api/save-chat-history', payload, { headers: headers })
+    this.http.post<any>(this.DireccionIP+'/api/save-chat-history', payload, { headers: headers })
       .subscribe(
         response => {
           console.log('Chat history saved:', response);
@@ -268,7 +270,7 @@ export class AppComponent implements OnInit {
   }
 
   loadChatHistory() {
-    this.http.get<any>(`http://127.0.0.1:5000/api/get-chat-history?user_id=${this.userId}`)
+    this.http.get<any>(this.DireccionIP+`/api/get-chat-history?user_id=${this.userId}`)
       .subscribe(
         response => {
           console.log('Chat history loaded:', response);
