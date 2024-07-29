@@ -77,9 +77,12 @@
             </div>
           </div>
         </div>
-        <button id="record" [ngClass]="{ 'recording': isRecording }" [disabled]="isRecording" (click)="handleRecording()">
+        <!-- <button id="record" [ngClass]="{ 'recording': isRecording }" [disabled]="isRecording" (click)="handleRecording()">
           {{ isRecording ? 'Grabando...' : 'Hablar' }}
-        </button>
+        </button> -->
+        <button id="record" [ngClass]="{ 'recording': isRecording }" [disabled]="isLoading" (click)="handleRecording()">
+          {{ isRecording ? 'Parar' : 'Hablar' }}
+        </button>        
       </div>
     </div>
   </body>

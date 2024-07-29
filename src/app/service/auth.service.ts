@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
-  DireccionIp: string =" https://b64e-200-24-158-126.ngrok-free.app";
+  DireccionIp: string ="http://127.0.0.1:5000";
   private registerUrl = this.DireccionIp+'/api/register';
   private loginUrl = this.DireccionIp+'/api/login';
 

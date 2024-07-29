@@ -9,7 +9,7 @@ import { AuthService } from './service/auth.service';
 })
 export class AppComponent implements OnInit {
   // DireccionIP: string = "http://127.0.0.1:5001";
-  DireccionIP: string = " https://b64e-200-24-158-126.ngrok-free.app";
+  DireccionIP: string = "http://127.0.0.1:5000";
   messageToSend: string = '';
   responseMessage: string = '';
   errorMessage: string = '';
@@ -64,25 +64,20 @@ export class AppComponent implements OnInit {
   }
 
   handleRecording() {
-    if (!this.isRecording) {
-      this.isRecording = true;
+    if (this.isRecording) {
+      this.stopRecording();
+    } else {
       this.startRecording();
-
-      setTimeout(() => {
-        this.isRecording = false;
-        if (this.mediaRecorder) {
-          this.mediaRecorder.stop();
-        }
-      }, 7000); 
     }
   }
-  
+
   startRecording() {
     navigator.mediaDevices.getUserMedia({ audio: true })
       .then(stream => {
         this.audioStream = stream;
         this.mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
         this.mediaRecorder.start();
+        this.isRecording = true;
 
         const audioChunks: BlobPart[] = [];
         this.mediaRecorder.addEventListener("dataavailable", event => {
@@ -94,8 +89,8 @@ export class AppComponent implements OnInit {
           const formData = new FormData();
           formData.append('audio', audioBlob);
 
-          this.isLoading = true; 
-          fetch(this.DireccionIP+'/api/transcribe', {
+          this.isLoading = true;
+          fetch(this.DireccionIP + '/api/transcribe', {
             method: 'POST',
             body: formData
           }).then(response => {
@@ -106,26 +101,30 @@ export class AppComponent implements OnInit {
           }).then(data => {
             this.transcript = data.transcript;
             this.textAudio = this.transcript;
-            this.transcript = ''; 
-            this.isLoading = false; 
+            this.transcript = '';
+            this.isLoading = false;
             this.sendMessage(this.textAudio);
           }).catch(error => {
             console.error('There was a problem with the fetch operation:', error);
-            this.isLoading = false; 
+            this.isLoading = false;
           }).finally(() => {
             if (this.audioStream) {
               this.audioStream.getTracks().forEach(track => track.stop());
             }
+            this.isRecording = false;
           });
         });
-
-        setTimeout(() => {
-          this.mediaRecorder?.stop();
-        }, 7000);
       }).catch(error => {
         console.error('There was a problem with getUserMedia:', error);
-        this.isRecording = false; 
+        this.isRecording = false;
       });
+  }
+
+  stopRecording() {
+    if (this.mediaRecorder && this.isRecording) {
+      this.mediaRecorder.stop();
+      this.isRecording = false;
+    }
   }
 
   sendMessage(txtAudio: string) {
@@ -156,39 +155,6 @@ export class AppComponent implements OnInit {
         }
       );
   }
-
-  // generateImage(prompt: string) {
-  //   this.imagePrompt = prompt;
-  //   if (!this.imagePrompt) {
-  //     alert('Por favor, ingrese una descripción para la imagen.');
-  //     return;
-  //   }
-
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json'
-  //   });
-  //   const payload = {
-  //     prompt: this.imagePrompt
-  //   };
-
-  //   this.http.post<any>(this.imageApiUrl, payload, { headers: headers })
-  //     .subscribe(
-  //       (response: any) => {
-  //         console.log('Image API Response:', response);
-  //         this.generatedImageUrl = response.image_url;
-  //         if (this.generatedImageUrl) {
-  //           this.addImageToChatHistory(this.generatedImageUrl);
-  //           this.saveChatHistory();
-  //         } else {
-  //           console.error('Image URL is null');
-  //         }
-  //       },
-  //       (error: any) => {
-  //         console.error('Image API Error:', error);
-  //         this.errorMessage = 'Error al generar la imagen.';
-  //       }
-  //     );
-  // }
 
   generateImage(prompt: string) {
     this.imagePrompt = prompt;
@@ -230,25 +196,6 @@ export class AppComponent implements OnInit {
     }
   }
 
-  // Guardar el historial en la base de datos
-  // saveChatHistory() {
-  //   const headers = new HttpHeaders({
-  //     'Content-Type': 'application/json'
-  //   });
-  //   const payload = {
-  //     chatHistory: this.chatHistory
-  //   };
-
-  //   this.http.post<any>('http://127.0.0.1:5000/api/save-chat-history', payload, { headers: headers })
-  //     .subscribe(
-  //       (response: any) => {
-  //         console.log('Chat history saved:', response);
-  //       },
-  //       (error: any) => {
-  //         console.error('Error saving chat history:', error);
-  //       }
-  //     );
-  // }
   saveChatHistory() {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'

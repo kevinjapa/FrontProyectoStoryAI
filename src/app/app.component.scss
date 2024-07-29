@@ -105,16 +105,17 @@ button:hover {
     cursor: pointer;
     font-size: 16px;
     align-self: flex-end;
-}
-
-#record.recording {
+  }
+  
+  #record.recording {
     background-color: #e3a5a5;
-}
-
-#record:disabled {
+  }
+  
+  #record:disabled {
     cursor: not-allowed;
     background-color: #aaa;
-}
+  }
+  
 
 #transcript {
     display: inline-block;
