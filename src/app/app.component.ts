@@ -155,20 +155,53 @@ export class AppComponent implements OnInit {
       );
   }
 
+  // generateImage(prompt: string) {
+  //   this.imagePrompt = prompt;
+  //   if (!this.imagePrompt) {
+  //     alert('Por favor, ingrese una descripción para la imagen.');
+  //     return;
+  //   }
+
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json'
+  //   });
+  //   const payload = {
+  //     prompt: this.imagePrompt
+  //   };
+
+  //   this.http.post<any>(this.imageApiUrl, payload, { headers: headers })
+  //     .subscribe(
+  //       (response: any) => {
+  //         console.log('Image API Response:', response);
+  //         this.generatedImageUrl = response.image_url;
+  //         if (this.generatedImageUrl) {
+  //           this.addImageToChatHistory(this.generatedImageUrl);
+  //           this.saveChatHistory();
+  //         } else {
+  //           console.error('Image URL is null');
+  //         }
+  //       },
+  //       (error: any) => {
+  //         console.error('Image API Error:', error);
+  //         this.errorMessage = 'Error al generar la imagen.';
+  //       }
+  //     );
+  // }
+
   generateImage(prompt: string) {
     this.imagePrompt = prompt;
     if (!this.imagePrompt) {
       alert('Por favor, ingrese una descripción para la imagen.');
       return;
     }
-
+  
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
     const payload = {
       prompt: this.imagePrompt
     };
-
+  
     this.http.post<any>(this.imageApiUrl, payload, { headers: headers })
       .subscribe(
         (response: any) => {
@@ -255,14 +288,16 @@ export class AppComponent implements OnInit {
         response => {
           console.log('User registered:', response);
           alert("Usuario Registrado Correctamente");
+          this.toggleAuthForm();
         },
         error => {
-          console.error('Registration error:', error);
+          console.error('Error al Registrar:', error);
+          alert("Error al Registrar:");
         }
       );
     }
     else{
-      alert("Contraseñas no Concuerdan");
+      alert("Error al Registrar");
     }
   }
   login(username: string, password: string) {
@@ -281,7 +316,7 @@ export class AppComponent implements OnInit {
       },
       error => {
         console.error('Login error:', error);
-        alert("Usuario o Contraseña son Incorrectos")
+        alert("Usuario o Contraseña son Incorrectos");
       }
     );
   }
