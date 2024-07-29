@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
   errorMessage: string = '';
   apiUrl = 'http://127.0.0.1:5000/api/chat-gpt';
   imageApiUrl = 'http://127.0.0.1:5000/generate-image';
-  getChatHistoryApiUrl = 'http://127.0.0.1:5000/api/get-chat-history'; // Nuevo endpoint para obtener el historial
+  getChatHistoryApiUrl = 'http://127.0.0.1:5000/api/get-chat-history';
 
   title = 'FrontProyectoStoryAI';
   transcript: string = '';
@@ -22,7 +22,6 @@ export class AppComponent implements OnInit {
   mediaRecorder: MediaRecorder | null = null;
   audioStream: MediaStream | null = null;
   chatHistory: { question: string, answer: string, imageUrl?: string }[] = [];
-
   textAudio: string = ''; // Variable con el texto del AUDIO
 
   // Para el Boton de los personajes
@@ -37,6 +36,8 @@ export class AppComponent implements OnInit {
   // variables para el ususario: isAuthenticated = false;
   isAuthenticated = false;
   userId: number | null = null;
+  showLogin = true;  // Variable para alternar entre login y registro
+
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
@@ -233,20 +234,6 @@ export class AppComponent implements OnInit {
       );
   }
 
-
-  // Cargar el historial desde la base de datos
-  // loadChatHistory() {
-  //   this.http.get<any>(this.getChatHistoryApiUrl)
-  //     .subscribe(
-  //       (response: any) => {
-  //         console.log('Chat history loaded:', response);
-  //         this.chatHistory = response.chatHistory;
-  //       },
-  //       (error: any) => {
-  //         console.error('Error loading chat history:', error);
-  //       }
-  //     );
-  // }
   loadChatHistory() {
     this.http.get<any>(`http://127.0.0.1:5000/api/get-chat-history?user_id=${this.userId}`)
       .subscribe(
@@ -262,15 +249,21 @@ export class AppComponent implements OnInit {
 
   // Control de Usuarios
   
-  register(username: string, password: string) {
-    this.authService.register(username, password).subscribe(
-      response => {
-        console.log('User registered:', response);
-      },
-      error => {
-        console.error('Registration error:', error);
-      }
-    );
+  register(username: string, password: string, confirmPassword: string) {
+    if(password===confirmPassword){
+      this.authService.register(username, password).subscribe(
+        response => {
+          console.log('User registered:', response);
+          alert("Usuario Registrado Correctamente");
+        },
+        error => {
+          console.error('Registration error:', error);
+        }
+      );
+    }
+    else{
+      alert("Contraseñas no Concuerdan");
+    }
   }
   login(username: string, password: string) {
     this.authService.login(username, password).subscribe(
@@ -288,6 +281,7 @@ export class AppComponent implements OnInit {
       },
       error => {
         console.error('Login error:', error);
+        alert("Usuario o Contraseña son Incorrectos")
       }
     );
   }
@@ -296,5 +290,7 @@ export class AppComponent implements OnInit {
     this.userId = null;
     localStorage.removeItem('user_id');
   }
-  
+  toggleAuthForm() {
+    this.showLogin = !this.showLogin;
+  }
 }

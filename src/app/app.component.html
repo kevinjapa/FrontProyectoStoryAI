@@ -1,4 +1,4 @@
-<div *ngIf="!isAuthenticated">
+<!-- <div *ngIf="!isAuthenticated">
   <h2>Register</h2>
   <form (submit)="register(registerUsername.value, registerPassword.value); $event.preventDefault();">
     <input type="text" #registerUsername placeholder="Username" required>
@@ -12,10 +12,33 @@
     <input type="password" #loginPassword placeholder="Password" required>
     <button type="submit">Login</button>
   </form>
+</div> -->
+
+<div *ngIf="!isAuthenticated" class="auth-section">
+  <h1>StoryAI</h1>
+  <div *ngIf="showLogin">
+    <h2>Iniciar Sesión</h2>
+    <form (submit)="login(loginUsername.value, loginPassword.value); $event.preventDefault();">
+      <input type="text" #loginUsername placeholder="Correo Electronico" required>
+      <input type="password" #loginPassword placeholder="Contraseña" required>
+      <button type="submit">Iniciar Sesión</button>
+    </form>
+    <p>¿No tienes una cuenta? <button (click)="toggleAuthForm()">Regístrate aquí</button></p>
+  </div>
+
+  <div *ngIf="!showLogin">
+    <h2>Registro</h2>
+    <form (submit)="register(registerUsername.value, registerPassword.value, confirmPassword.value); $event.preventDefault();">
+      <input type="text" #registerUsername placeholder="Correo Electronico" required>
+      <input type="password" #registerPassword placeholder="Contraseña" required>
+      <input type="password" #confirmPassword placeholder="Confirmar Contraseña" required>
+      <button type="submit">Registrar</button>
+    </form>
+    <p>¿Ya tienes una cuenta? <button (click)="toggleAuthForm()">Inicia sesión aquí</button></p>
+  </div>
 </div>
 
 <div *ngIf="isAuthenticated">
-   
   <body>
     <div class="principal">
       <h1>StoryAI</h1>
