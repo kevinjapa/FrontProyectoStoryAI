@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { AuthService } from './service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -33,10 +34,20 @@ export class AppComponent implements OnInit {
   imagePrompt: string = '';
   generatedImageUrl: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  // variables para el ususario: isAuthenticated = false;
+  isAuthenticated = false;
+  userId: number | null = null;
+
+  constructor(private http: HttpClient, private authService: AuthService) {}
 
   ngOnInit() {
-    this.loadChatHistory(); // Cargar el historial del chat al inicializar el componente
+    // this.loadChatHistory(); // Cargar el historial del chat al inicializar el componente
+    const savedUserId = localStorage.getItem('user_id');
+    if (savedUserId) {
+      this.userId = parseInt(savedUserId, 10);
+      this.isAuthenticated = true;
+      this.loadChatHistory();
+    }
   }
 
   toggleDropdown() {
@@ -184,36 +195,106 @@ export class AppComponent implements OnInit {
   }
 
   // Guardar el historial en la base de datos
+  // saveChatHistory() {
+  //   const headers = new HttpHeaders({
+  //     'Content-Type': 'application/json'
+  //   });
+  //   const payload = {
+  //     chatHistory: this.chatHistory
+  //   };
+
+  //   this.http.post<any>('http://127.0.0.1:5000/api/save-chat-history', payload, { headers: headers })
+  //     .subscribe(
+  //       (response: any) => {
+  //         console.log('Chat history saved:', response);
+  //       },
+  //       (error: any) => {
+  //         console.error('Error saving chat history:', error);
+  //       }
+  //     );
+  // }
   saveChatHistory() {
     const headers = new HttpHeaders({
       'Content-Type': 'application/json'
     });
     const payload = {
+      user_id: this.userId,
       chatHistory: this.chatHistory
     };
 
     this.http.post<any>('http://127.0.0.1:5000/api/save-chat-history', payload, { headers: headers })
       .subscribe(
-        (response: any) => {
+        response => {
           console.log('Chat history saved:', response);
         },
-        (error: any) => {
+        error => {
           console.error('Error saving chat history:', error);
         }
       );
   }
 
+
   // Cargar el historial desde la base de datos
+  // loadChatHistory() {
+  //   this.http.get<any>(this.getChatHistoryApiUrl)
+  //     .subscribe(
+  //       (response: any) => {
+  //         console.log('Chat history loaded:', response);
+  //         this.chatHistory = response.chatHistory;
+  //       },
+  //       (error: any) => {
+  //         console.error('Error loading chat history:', error);
+  //       }
+  //     );
+  // }
   loadChatHistory() {
-    this.http.get<any>(this.getChatHistoryApiUrl)
+    this.http.get<any>(`http://127.0.0.1:5000/api/get-chat-history?user_id=${this.userId}`)
       .subscribe(
-        (response: any) => {
+        response => {
           console.log('Chat history loaded:', response);
           this.chatHistory = response.chatHistory;
         },
-        (error: any) => {
+        error => {
           console.error('Error loading chat history:', error);
         }
       );
   }
+
+  // Control de Usuarios
+  
+  register(username: string, password: string) {
+    this.authService.register(username, password).subscribe(
+      response => {
+        console.log('User registered:', response);
+      },
+      error => {
+        console.error('Registration error:', error);
+      }
+    );
+  }
+  login(username: string, password: string) {
+    this.authService.login(username, password).subscribe(
+      response => {
+        console.log('Login successful:', response);
+        this.userId = response.user_id;
+  
+        if (this.userId != null) {
+          localStorage.setItem('user_id', this.userId.toString());
+          this.isAuthenticated = true;
+          this.loadChatHistory();
+        } else {
+          console.error('user_id is null or undefined');
+        }
+      },
+      error => {
+        console.error('Login error:', error);
+      }
+    );
+  }
+  logout() {
+    this.isAuthenticated = false;
+    this.userId = null;
+    localStorage.removeItem('user_id');
+  }
+  
 }
