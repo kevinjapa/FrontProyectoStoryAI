@@ -231,8 +231,36 @@ export class AppComponent implements OnInit {
 
   // Control de Usuarios
   
+  // register(username: string, password: string, confirmPassword: string) {
+
+  //   if(password===confirmPassword){
+  //     this.authService.register(username, password).subscribe(
+  //       response => {
+  //         console.log('User registered:', response);
+  //         alert("Usuario Registrado Correctamente");
+  //         this.toggleAuthForm();
+  //       },
+  //       error => {
+  //         console.error('Error al Registrar:', error);
+  //         alert("Error al Registrar:");
+  //       }
+  //     );
+  //   }
+  //   else{
+  //     alert("Error al Registrar");
+  //   }
+  // }
+
+  isValidEmail(email: string): boolean {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailPattern.test(email);
+  }
   register(username: string, password: string, confirmPassword: string) {
-    if(password===confirmPassword){
+    if (!this.isValidEmail(username)) {
+      alert("Por favor, ingrese un correo electrónico válido.");
+      return;
+    }
+    if (password === confirmPassword) {
       this.authService.register(username, password).subscribe(
         response => {
           console.log('User registered:', response);
@@ -244,12 +272,15 @@ export class AppComponent implements OnInit {
           alert("Error al Registrar:");
         }
       );
-    }
-    else{
-      alert("Error al Registrar");
+    } else {
+      alert("Las contraseñas no coinciden.");
     }
   }
   login(username: string, password: string) {
+    // if (!this.isValidEmail(username)) {
+    //   alert("Por favor, ingrese un correo electrónico válido.");
+    //   return;
+    // }
     this.authService.login(username, password).subscribe(
       response => {
         console.log('Login successful:', response);
